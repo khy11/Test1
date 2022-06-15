@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	!  
 	6.15 비가오네용
 </h1>
 
