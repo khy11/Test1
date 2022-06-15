@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+
+id: <input id="id" type="text"> <br>
+pw: <input id="pw" type="password"> <br>
+<input id="a" type="submit" value="확인1">
+<button id="b" >확인2</button>
+<br><span></span>
+
+
+<script>
+$("#id").val("aaaaaa"); // id값이 id인 곳에 aaaaaa 기입
+$("#a").click(function(){  // id값이 a인 곳을 클릭하면 
+	console.log("확인1 클릭")  //콘솔창에 확인1클릭 표시
+	$("span").text( $("#id").val() ); //span => 밑에칸에 작성 id가 id인곳에 val을 작성
+});
+$("#b").click(function(){  //id가 b인 곳을 클릭하면
+	console.log("확인2 클릭")  
+	$("span").text( $("#pw").val() ); //밑에 칸에 text를 기입하라 id가 pw인곳에 기입한 내용을
+});
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+html 파일이기 때문에 서버돌릴 필요없이 바로 브라우저로 열어서 확인 
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<div id="myPara"> 여기는 단락</div>
+<h2 class="hide">클릭하면 사라집니다.</h2>
+<h1 class ="show">나도 id가 show다</h1>
+
+<script>
+$("#myPara").html("이걸로 변경");
+</script>
+
+
+<script>
+$(document).ready(function(){ // 문서가 로딩완료되면 수행하라는 뜻으로 없어도 됨 
+	$("h1.hide").click(function(){ //id는 # class는 .
+/* 		$(this).hide(); */
+		$("#myPara").hide();
+	});
+	$(".hide").click(function(){ //id는 # class는 .
+/* 		$(this).hide(); */
+		$("#myPara").hide();
+	});
+	$("#show").click(function(){
+/* 		$(this).hide(); */
+		$("#myPara").show();
+	});
+});
+
+</script>
+</body>
+</html>
