@@ -47,7 +47,7 @@
                             
                             <!--다음페이지, 이전페이지 -->
  					 <c:if test="${pageMaker.prev}">
-                            <a href="/board/list?pageNum=${pageMaker.startPage-1}&&amount=${pageMaker.cri.amount}"> pre </a>  &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/board/list?pageNum=${pageMaker.startPage-1}&&amount=${pageMaker.cri.amount}"> prev </a>  &nbsp;&nbsp;&nbsp;&nbsp;
                             </c:if>
                             
                             <c:forEach begin="${pageMaker.startPage}"  end="${pageMaker.endPage}" var="num">
@@ -138,7 +138,6 @@ if(state=="remove"){
 	$(".modal-body").text("수정이 정상적으로 처리되었습니다.");
 	$("#myModal").modal("show");
 }
-
 </script>
 
 </body>
