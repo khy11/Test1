@@ -7,8 +7,9 @@
 <body>
 <h1>
 	Hello world!  
+	6.15 비가오네용
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+<P>  서버시간은 ${serverTime}. </P>
 </body>
 </html>
