@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.OverlapVO;
+import org.zerock.domain.RankVO;
 import org.zerock.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -43,8 +45,18 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public Long count() {
-		return mapper.count();
+	public Long count(Criteria cri) {
+		return mapper.count(cri);
+	}
+
+	@Override
+	public List<RankVO> rank() {
+		return mapper.rank(); // db에 연결해서 rank 값 가져옴 
+	}
+
+	@Override
+	public List<OverlapVO> overlap() {
+		return mapper.overlap();
 	}
 
 }

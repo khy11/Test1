@@ -21,7 +21,6 @@
                         <div class="panel-body">
                          	
                          	<form action="/board/register" method="post">
-                         	<label>제목</label>
                          	<input class="form-control" placeholder="제목을 적어주세요" type="text" name = "title" required="required">
                          	<br>
                          	<label>내용</label>

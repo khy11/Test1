@@ -15,7 +15,10 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            게시판 목록보기 <a href="/board/register">글등록</a> &nbsp;&nbsp;&nbsp; 총글개수(${pageMaker.total})
+                            게시판 목록보기 <a href="/board/register">글등록</a> &nbsp;&nbsp;&nbsp; 총글개수(${pageMaker.total}) &nbsp;&nbsp;&nbsp;
+                            <a href="/board/rank?pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}">랭킹</a>
+                            &nbsp;&nbsp;&nbsp; <a href="/board/overlap?pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}">중복된 글</a>
+                            
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -30,20 +33,44 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-   
-<c:forEach var="board" items="${list}" >              
+    <c:forEach var="board" items="${list}" >              
                                   <tr class="odd gradeX">
                                    <td>${board.bno}</td>
-                                   <!-- <a href="/board/get?bno=${board.bno}">는 제목을 클릭하는 글 페이지로 들어가게 링크삽입 -->
-                                   <td><a href="/board/get?bno=${board.bno}">${board.title}</a></td>
+                                   <!-- <a href="/board/get?bno=${board.bno}">는 제목을 클릭하면 글 페이지로 들어가게 링크삽입 -->
+                                   <td><a href="/board/get?bno=${board.bno}&pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}">${board.title}</a></td>
                                    <!-- c:out링크는 작성자칸에서 html이나 css태그를 쓰면 작동되는걸 금지하는 코드 -->
                                    <td><c:out value="${board.writer}"/></td>
                                    <td><fmt:formatDate pattern="yyy-MM-dd" value="${board.regdate }"/></td>
                                    <td><fmt:formatDate pattern="MM-dd hh:mm" value="${board.updatedate}"/></td>
-                                 </tr>
- </c:forEach>     
+                                 <!-- 랭킹  -->
+                                   
+                                   <!-- c:out링크는 작성자칸에서 html이나 css태그를 쓰면 작동되는걸 금지하는 코드 -->
+                                   <td><c:out value="${board.writer}"/></td>
+                                   <td><fmt:formatDate pattern="yyy-MM-dd" value="${board.regdate }"/></td>
+                                   <td><fmt:formatDate pattern="MM-dd hh:mm" value="${board.updatedate}"/></td>
+
+
+
+   </c:forEach>                                </tr>                          
+      
                                    </tbody>
                             </table>
+                                
+   <form action="/board/list" method="get">
+   <select name="type">
+   <option>검색조건</option>
+   <option ${pageMaker.cri.type == "T" ? "selected" : ""} value="T">제목</option>
+   <option ${pageMaker.cri.type == "C" ? "selected" : ""} value="C">내용</option>  
+   <option ${pageMaker.cri.type == "W" ? "selected" : ""} value="W">작성자</option>
+   <option ${pageMaker.cri.type == "TC" ? "selected" : ""} value="TC">제목 or 내용</option>
+   <option ${pageMaker.cri.type == "TW" ? "selected" : ""} value="TW">제목 or 작성자</option>
+   <option ${pageMaker.cri.type == "CW" ? "selected" : ""} value="CW">내용 or 작성자</option>
+   <option ${pageMaker.cri.type == "TCW" ? "selected" : ""} value="TCW">제목 or 내용 or 작성자</option>
+   </select>
+   <input type="text" name="keyword">
+   <input type="submit" value="검색">
+     </form>
+     <br>
                             
                             <!--다음페이지, 이전페이지 -->
  					 <c:if test="${pageMaker.prev}">
@@ -51,10 +78,25 @@
                             </c:if>
                             
                             <c:forEach begin="${pageMaker.startPage}"  end="${pageMaker.endPage}" var="num">
-                            	 <a href="/board/list?pageNum=${num}&amount=${pageMaker.cri.amount}">${num}</a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            	 <a href="/board/list?pageNum=${num}&amount=${pageMaker.cri.amount}&type=${pageMaker.cri.type}&keyword=${pageMaker.cri.keyword}">
+                            	 
+                            	 <%--현재 페이지 번호 진하게 
+                            	 1. ${param.pageNum}
+                            	 2. ${pageMaker.cri.pageNum} 
+                            	 3. ${critera.pageNum}
+                          	     --%>
+                          	     
+                            	<c:if test="${pageMaker.cri.pageNum == num}" >
+                            	<b>${num}</b>
+                            	</c:if>
+                            	<c:if test="${pageMaker.cri.pageNum != num}" >
+                            	   ${num}
+                            	</c:if> 
+                            	  
+                            	 </a> &nbsp;&nbsp;&nbsp;&nbsp;
                             </c:forEach>
                             
-                            <c:if test="${pageMaker.next}">
+						<c:if test="${pageMaker.next}">
                             	<a href="/board/list?pageNum=${pageMaker.endPage+1}&&amount=${pageMaker.cri.amount}"> next </a>
                             </c:if>
                             

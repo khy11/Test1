@@ -51,37 +51,51 @@ public class BoardController {
 //		return "/home"; 
 		return "redirect:/board/list"; //주의 : /board/list.jsp가 아니라 새로운 url요청이다.
 	}
-	//조회 /get?bno=13(get) -> 요청 /board/get.jsp, modify(post) -> 요청 /board/list
+	//조회 /get?bno=13(get) -> 요청 /board/get.jsp, modify(post) -> 요청 /board/modify.jsp
+	//변경 -> /get?bno=12&pageNum=2&amount=10
 	@GetMapping({"/get","/modify"})
-	public void get(Long bno,Model model) {
+	public void get(Long bno,Criteria cri,Model model) { 
 		model.addAttribute("board", service.get(bno));
 	}
 	
 	//삭제 /remove(post) -> 요청 /board/list
 	@PostMapping("/remove")
-	public String remove(Long bno, RedirectAttributes rttr) {
+	public String remove(Long bno,Criteria cri,RedirectAttributes rttr) {
 		if(service.remove(bno))
 		rttr.addFlashAttribute("state","remove");
-		return "redirect:/board/list";
+		return "redirect:/board/list?pageNum="+cri.getPageNum()+"&amount="+cri.getAmount();
 	}
 	
 
 	
 	//수정 /modify(post) -> 요청 /board/list
 	@PostMapping("/modify")
-	public String modify(BoardVO vo, RedirectAttributes rttr) {
+	public String modify(BoardVO vo,Criteria cri, RedirectAttributes rttr) {
 		if(service.modify(vo))
 			rttr.addAttribute("state", "modify");
-		return "redirect:/board/list";
+		return "redirect:/board/list?pageNum="+cri.getPageNum()+"&amount="+cri.getAmount();
+	}
+	
+//  /borad/rank -> 요청 /board/rank
+	@GetMapping("/rank")
+	public void rank(Criteria cri,Model model) { // 다른 페이지를 지정하고 싶으면 string 매핑루프와 같은페이지 열고싶으면 void 
+		log.info("랭킹 데이터"+service.rank());
+		model.addAttribute("rank", service.rank());
+	}
+	
+//  /board/overlap -> board/list
+	@GetMapping("/overlap")
+	public void overlap(Criteria cri, RedirectAttributes rttr, Model model) {
+		model.addAttribute("overlap", service.overlap());
 	}
 	
 //-----------------------------------------------------------
 	
 	//퀴즈 count
 	@GetMapping("count")
-	public void count(Model model) {
+	public void count(Model model,Criteria cri) {
 		//총 글 갯수 가져오는 서비스
-		model.addAttribute("count", service.count());
+		model.addAttribute("count", service.count(cri));
 	}
 	
 }

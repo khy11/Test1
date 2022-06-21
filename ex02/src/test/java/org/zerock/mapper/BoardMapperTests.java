@@ -33,7 +33,9 @@ public class BoardMapperTests {
 	
 	@Test
 	public void testGetListWithPaging() {
-		Criteria cri = new Criteria(2,3);
+		Criteria cri = new Criteria();
+		cri.setType("TW");
+		cri.setKeyword("a");
 		mapper.getListWithPaging(cri).forEach(vo->log.info(vo));
 	}
 	
@@ -81,14 +83,17 @@ public class BoardMapperTests {
 	}
 	
 	
-	
-	
-	
-	
-	
 	@Test
 	public void testCount() {
-		log.info("글개수는:" + mapper.count());
+		//log.info("글개수는:" + mapper.count());
+		// 1. 전체글 개수 확인
+		Criteria cri = new Criteria();
+		log.info("글 개수는 : " + mapper.count(cri));
+		
+		//2. 검색글 개수 확인
+		cri.setType("TW");
+		cri.setType("a");
+		log.info("검색된 글 개수는 : " + mapper.count(cri));
 	}
 	
 	@Test

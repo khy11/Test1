@@ -5,9 +5,16 @@ import java.util.List;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.CountVO;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.OverlapVO;
+import org.zerock.domain.RankVO;
 
 public interface BoardMapper {
+	//중복글 갯수 
+	public List<OverlapVO> overlap();
 	
+	//글 많이 쓴 순서 (랭킹)
+	public List<RankVO> rank();
+		
 	//목록보기
 	public List<BoardVO>  getList();
 	
@@ -40,7 +47,7 @@ public interface BoardMapper {
 	
 	
 	//임의추가 - 글목록 개수
-	public Long count();
+	public Long count(Criteria cri);
 	
 	//임의추가 - 작성글 개수
 	//public Long count1(String user);  // -> ${user} 
